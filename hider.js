@@ -66,11 +66,11 @@ const checkForNewBlueUsers = () => {
         if (isBlue) {
           blue.push(name);
 
-          browser.storage.sync.set({ blue });
+          chrome.storage.sync.set({ blue });
 
           console.info(`Found Twitter Blue user: @${name}`);
         }
-      });
+      }, 25);
     }
   }
 };
@@ -91,19 +91,19 @@ const check = async () => {
   }
 };
 
-const start = async () => {
-  const { blue: blueUsers } = await browser.storage.sync.get();
+const start = () => {
+  chrome.storage.sync.get(["blue"], ({ blue: blueUsers }) => {
+    if (Array.isArray(blueUsers)) {
+      blue = blueUsers;
 
-  if (Array.isArray(blueUsers)) {
-    blue = blueUsers;
+      console.info(
+        "Loaded Twitter Blue users from storage: ",
+        blueUsers.join(", ")
+      );
+    }
 
-    console.info(
-      "Loaded Twitter Blue users from storage: ",
-      blueUsers.join(", ")
-    );
-  }
-
-  setInterval(check, 100);
+    setInterval(check, 3000);
+  });
 };
 
 start();
