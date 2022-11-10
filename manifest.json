@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "True Verified",
+  "version": "1.0",
+
+  "description": "Grays-out Twitter verified checkmarks of Twitter Blue users.",
+
+  "icons": {
+    "48": "icons/icon-48.png"
+  },
+
+  "permissions": ["storage"],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.twitter.com/*"],
+      "js": ["hider.js"]
+    }
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "true-verified@codingpa.ws"
+    }
+  }
+}
